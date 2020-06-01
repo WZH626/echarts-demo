@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/js/jquery.min1.10.2.js}" src="../static/js/jquery.min1.10.2.js"></script>
+
+    <script th:src="@{/js/echarts.min.js}"   src="../static/js/echarts.min.js"></script>
+
+    <script th:src="@{/js/highcharts.min.js}"   src="../static/js/highcharts.min.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="divId" style="width: 600px;height:400px;"></div>
+
+
+<div id="container" style="min-width:400px;height:400px"></div>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="zhuId" style="width: 600px;height:400px;"></div>
+</body>
+<script>
+    $(function () {
+
+        //加载数据
+        initEacharts();
+        initEachartstwo();
+        initEachartsThree();
+        initEachartsFive();
+    })
+
+   function initEacharts(){
+        $.ajax({
+            url: "/car/countCar",
+            type: "post",
+            success: function (data) {
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'));
+
+                // 取出 汽车销量 排前五名的 汽车名字还有销售数量
+
+                var option = {
+                    xAxis: {
+                        type: 'category',
+                        data: data.name
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: data.value,
+                        type: 'line'
+                    }]
+                };
+                myChart.setOption(option);
+            }, error: function () {
+                alert("失败");
+            }
+        })
+
+
+    }
+    function initEachartstwo() {
+        $.ajax({
+            url: "/car/countCar",
+            type: "post",
+            success: function (data) {
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('divId'));
+
+                // 取出 汽车销量 排前五名的 汽车名字还有销售数量
+
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: data.name,
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: data.value,
+                        type: 'line',
+                        areaStyle: {}
+                    }]
+                };
+                myChart.setOption(option);
+            }, error: function () {
+                alert("失败");
+            }
+        })
+    }
+
+
+    function initEachartsThree() {
+        $.ajax({
+            url: "/car/echaer",
+            type: "post",
+            success: function (data) {
+                // 基于准备好的dom，初始化echarts实例
+
+                // 取出 汽车销量 排前五名的 汽车名字还有销售数量
+
+                var chart = Highcharts.chart('container', {
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: '两地月平均温度'
+                    },
+                    subtitle: {
+                        text: '数据来源: WorldClimate.com'
+                    },
+                    xAxis: {
+                        categories: data.weeked,
+                    },
+                    yAxis: {
+                        title: {
+                            text: '温度'
+                        },
+                        /*labels: {
+                            formatter: function () {
+                                return this.value + '°';
+                            }
+                        }*/
+                    },
+                    tooltip: {
+                        crosshairs: true,
+                        shared: true
+                    },
+                    plotOptions: {
+                        spline: {
+                            marker: {
+                                radius: 4,
+                                lineColor: '#666666',
+                                lineWidth: 1
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '东京',
+                        marker: {
+                            symbol: 'square'
+                        },
+                        data: data.ccount,
+                        /*[7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, {
+                            y: 26.5,
+                            marker: {
+                                symbol: 'url(https://code.highcharts.com.cn/highcharts/graphics/sun.png)'
+                            }
+                        }, 23.3, 18.3, 13.9, 9.6]*/
+                    }]
+                });
+
+               /* chart.setOption(option);*/
+            }, error: function () {
+                alert("失败");
+            }
+        })
+
+    }
+
+    function initEachartsFive(){
+        $.ajax({
+            url: "/car/Five",
+            type: "post",
+            success: function (data) {
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('zhuId'));
+
+                // 取出 汽车销量 排前五名的 汽车名字还有销售数量
+
+                option = {
+                    xAxis: {
+                        type: 'category',
+                        data: data.name
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: data.value,
+                        type: 'bar',
+                        showBackground: true,
+                        backgroundStyle: {
+                            color: 'rgba(220, 220, 220, 0.8)'
+                        }
+                    }]
+                };
+                myChart.setOption(option);
+            }, error: function () {
+                alert("失败");
+            }
+        })
+
+
+
+    }
+
+</script>
+</html>

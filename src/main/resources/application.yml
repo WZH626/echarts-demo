@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    name: echarts-demo
+    url: jdbc:mysql://localhost:3306/mysql66?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=GMT%2B8
+    username: root
+    password: 123
+    driver-class-name:  com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    password:
+
+    jedis:
+      pool:
+        min-idle: 0
+        max-idle: 10
+        max-wait: -1ms
+        max-active: 20
+    timeout: 6000ms
+  thymeleaf:
+    prefix: classpath:/templates/
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+
+
+

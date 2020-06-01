@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"  >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:src="@{/js/jquery.min1.10.2.js}" src="../static/js/jquery.min1.10.2.js"></script>
+    <link th:href="@{/js/bootstrap3/css/bootstrap.css}" href="../static/js/bootstrap3/css/bootstrap.css"
+          rel="stylesheet"/>
+    <link th:href="@{/js/bootstrap-table/bootstrap-table.css}" href="../static/js/bootstrap-table/bootstrap-table.css"
+          rel="stylesheet"/>
+    <script th:src="@{/js/bootstrap-table/bootstrap-table.js}"
+            src="../static/js/bootstrap-table/bootstrap-table.js"></script>
+    <script th:src="@{/js/bootstrap-table/locale/bootstrap-table-zh-CN.js}"
+            src="../static/js/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script th:src="@{/js/bootstrap3/js/bootstrap.js}" src="../static/js/bootstrap3/js/bootstrap.js"></script>
+    <script th:src="@{/js/bootstrap-bootbox/bootbox.js}" src="../static/js/bootstrap-bootbox/bootbox.js"></script>
+</head>
+<body>
+<button onclick="tobaobiao()" type="button" class="btn btn-success glyphicon glyphicon-minus">统计报表</button>
+    <div id="showList"></div>
+</body>
+<script>
+    $(function () {
+        queryCar();
+    })
+    
+    function queryCar() {
+        $("#showList").bootstrapTable({
+            url: "../car/queryCarList",
+            method: 'post',
+            striped: true,  	// 斑马线效果     默认false
+            //只允许选中一行
+            singleSelect: true,
+            //选中行是不选中复选框或者单选按钮
+            clickToSelect: true,
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            uniqueId: "carId",                 //每一行的唯一标识，一般为主键列
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,     //  最少留两列
+            detailView: false,                  //是否显示父子表
+            toolbar: '#tabToolBar',   //  工具定义位置
+            sidePagination: 'client',//
+            toolbar: '#toolbar',
+            pagination: true, //是否展示分页
+            pageList: [2, 4, 8, 10],//分页组件
+            pageNumber: 1,
+            pageSize: 2,//默认每页条数
+            //启动回车键做搜索功能
+            searchOnEnterKey: true,
+            //设置为false 将禁止所有列的排序。
+            sortable: true,
+            //设置默认排序为 name
+            sortName: 'carId',
+            //定义排序方式，'asc' 或者 'desc'。
+            sortOrder: "desc",
+            //设置为undefined可以获取pageNumber，pageSize，searchText，sortName，sortOrder
+            // 设置为limit可以获取limit, offset, search, sort, order
+            queryParamsType: 'undefined',
+            // 请求服务器数据
+            queryParams: function queryParams(params) {
+                var param = {
+
+                };
+                return param;
+            },
+            columns: [
+
+
+                {field: 'checkbox', checkbox: true},  //开启复选框
+                {field: 'cid', title: '汽车编号', width: 500},      //  列    field   代表是 后台  传过来的值
+                {field: 'cname', title: '车名', width: 500},
+                {field: 'ccount', title: '车主性别', width: 500},
+                {field: 'week', title: '星期', width: 500},
+                {field: 'cdate', title: '时间', width: 500}
+
+            ]
+        });
+
+}
+
+function tobaobiao() {
+    location.href="../car/toecharts";
+}
+
+</script>
+
+</html>
